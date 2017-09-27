@@ -2,7 +2,7 @@
 //https://github.com/iktsenteret/pifu/blob/master/pifu-ims/docs/spesifikasjon.md
 class pifu_parser
 {
-	public $xml;
+	public $xml=false;
 	function __construct()
 	{
 		$this->load_xml();
