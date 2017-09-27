@@ -33,7 +33,7 @@ class pifu_parser
 	function person($id)
 	{
 		$xpath=sprintf('/enterprise/person/sourcedid/id[.="%s"]/ancestor::person',$id);
-		return $this->xml->xpath($xpath);
+		return $this->xml->xpath($xpath)[0];
 	}
 	function phone($person,$teltype)
 	{
