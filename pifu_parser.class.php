@@ -53,5 +53,26 @@ class pifu_parser
 		ksort($groups,SORT_NATURAL);
 		return $groups;
 	}
+	//Order group members by name
+	function ordered_members($group,$order_by_name='given')
+	{
+		foreach($this->members($group) as $member)
+		{
+			preg_match('/Schoolclass member (.+?), (.+)/',$member->comments,$name);
+
+			if($order_by_name==='given')
+				$key=2;
+			elseif($order_by_name==='family')
+				$key=1;
+			else
+				throw new Exception('Invalid sort');
+			if(!isset($name[$key]))
+				$members[]=$member;
+			else
+				$members[$name[$key]]=$member;
+		}
+		ksort($members,SORT_NATURAL);
+		return $members;
+	}
 	
 }
