@@ -35,6 +35,11 @@ class pifu_parser
 		$xpath=sprintf('/enterprise/person/sourcedid/id[.="%s"]/ancestor::person',$id);
 		return $this->xml->xpath($xpath)[0];
 	}
+	function person_by_userid($id,$type)
+	{
+		$xpath=sprintf('/enterprise/person/userid[@useridtype="%s" and .="%s"]/ancestor::person',$type,$id);
+		return $this->xml->xpath($xpath)[0];
+	}
 	function phone($person,$teltype)
 	{
 		$xpath=sprintf('.//tel[@teltype="%s"]',$teltype);
@@ -71,6 +76,8 @@ class pifu_parser
 			else
 				$members[$name[$key]]=$member;
 		}
+		if(empty($members))
+			return false;
 		ksort($members,SORT_NATURAL);
 		return $members;
 	}
