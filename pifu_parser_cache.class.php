@@ -3,11 +3,30 @@ require_once 'pifu_parser.class.php';
 class pifu_parser_cache extends pifu_parser
 {
 	public $cachedir;
-	function __construct()
+	public $xml_file;
+	function __construct($xml_file=false,$cachedir=false)
 	{
-		$this->cachedir=__DIR__.'/cache';
+		if(file_exists(__DIR__.'/config.php'))
+		{
+			require __DIR__.'/config.php';
+			$this->cachedir=$config['pifu_cache_dir'];
+			$this->xml_file=$config['pifu_xml_file'];
+		}
+		else
+		{
+			$this->cachedir=__DIR__.'/cache';
+			$this->xml_file=__DIR__.'/pifuData.xml';
+		}
+
 		if(!file_exists($this->cachedir))
-			mkdir($this->cachedir);
+		{
+			if(@mkdir($this->cachedir)===false)
+			{
+				//$this->cachedir=sys_get_temp_dir().'/pifu-php_cache';
+				throw new Exception('Unable to create cache folder '.$this->cachedir);
+				//mkdir($this->cachedir);
+			}
+		}
 	}
 	function cache($data,$cachefile)
 	{
@@ -19,12 +38,14 @@ class pifu_parser_cache extends pifu_parser
 		}
 		return json_decode(file_get_contents($this->cachedir.'/'.$cachefile));
 	}
-	function load_xml($output=false)
+	function load_xml()
 	{
 		if($this->xml!==false)
 			return;
-		$processed_file=__DIR__.'/pifuData_processed.xml';
-		$original_time=filemtime(__DIR__.'/pifuData.xml');
+		$processed_file=$this->cachedir.'/pifuData_processed.xml';
+		if(!file_exists($this->xml_file))
+			throw new Exception('Could not find XML file '.$this->xml_file);
+		$original_time=filemtime($this->xml_file);
 
 		if(!file_exists($processed_file))
 			$processed_time=0;
@@ -32,16 +53,14 @@ class pifu_parser_cache extends pifu_parser
 			$processed_time=filemtime($processed_file);
 		if($original_time>$processed_time)
 		{
-			echo "Cache is outdated\n";
 			array_map('unlink', glob($this->cachedir.'/*.json'));
-			unlink($processed_file);
-			parent::load_xml();
+			if(file_exists($processed_file))
+				unlink($processed_file);
+			parent::load_xml($this->xml_file);
 			$this->xml->asXML($processed_file);
 		}
 		else
 		{
-			if($output)
-				echo "Cache is valid\n";
 			$this->xml=simplexml_load_file($processed_file);
 		}
 	}
