@@ -3,13 +3,15 @@
 class pifu_parser
 {
 	public $xml=false;
-	function __construct()
+	function __construct($xml_file=false)
 	{
-		$this->load_xml();
+		$this->load_xml($xml_file);
 	}
-	function load_xml()
+	function load_xml($xml_file=false)
 	{
-		$xml_string=file_get_contents(__DIR__.'/pifuData.xml');
+		if($xml_file===false)
+			$xml_file=__DIR__.'/pifuData.xml';
+		$xml_string=file_get_contents($this->xml_file);
 		$xml_string=str_replace(' xmlns="http://pifu.no/xsd/pifu-ims_sas/pifu-ims_sas-1.1"','',$xml_string); //Remove namespace
 		$this->xml=simplexml_load_string($xml_string);
 	}
