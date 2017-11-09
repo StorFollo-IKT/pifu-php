@@ -11,6 +11,8 @@ class pifu_parser
 	{
 		if($xml_file===false)
 			$xml_file=__DIR__.'/pifuData.xml';
+		if(!file_exists($xml_file))
+			throw new Exception('Could not find XML file '.$xml_file);
 		$xml_string=file_get_contents($this->xml_file);
 		$xml_string=str_replace(' xmlns="http://pifu.no/xsd/pifu-ims_sas/pifu-ims_sas-1.1"','',$xml_string); //Remove namespace
 		$this->xml=simplexml_load_string($xml_string);
