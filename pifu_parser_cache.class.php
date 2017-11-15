@@ -38,10 +38,13 @@ class pifu_parser_cache extends pifu_parser
 		}
 		return json_decode(file_get_contents($this->cachedir.'/'.$cachefile));
 	}
-	function load_xml()
+	function load_xml($xml_file=false)
 	{
 		if($this->xml!==false)
 			return;
+		if($xml_file!==false)
+			$this->xml_file=$xml_file;
+
 		$processed_file=$this->cachedir.'/pifuData_processed.xml';
 		if(!file_exists($this->xml_file))
 			throw new Exception('Could not find XML file '.$this->xml_file);
