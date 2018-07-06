@@ -37,7 +37,11 @@ class pifu_parser
 	function person($id)
 	{
 		$xpath=sprintf('/enterprise/person/sourcedid/id[.="%s"]/ancestor::person',$id);
-		return $this->xml->xpath($xpath)[0];
+		$person=$this->xml->xpath($xpath);
+		if(empty($person))
+			return false;
+		else
+			return $person[0];
 	}
 	function person_by_userid($id,$type)
 	{
