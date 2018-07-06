@@ -63,6 +63,8 @@ class pifu_parser
 			$sort_parameter=(string)$group->description->short;
 			$groups[$sort_parameter]=$group;
 		}
+		if(!isset($groups))
+			return false;
 		ksort($groups,SORT_NATURAL);
 		return $groups;
 	}
