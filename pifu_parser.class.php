@@ -46,7 +46,10 @@ class pifu_parser
 	function person_by_userid($id,$type)
 	{
 		$xpath=sprintf('/enterprise/person/userid[@useridtype="%s" and .="%s"]/ancestor::person',$type,$id);
-		return $this->xml->xpath($xpath)[0];
+		if(empty($person))
+			return false;
+		else
+			return $person[0];
 	}
 	function phone($person,$teltype)
 	{
