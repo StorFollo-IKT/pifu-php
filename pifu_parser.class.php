@@ -27,11 +27,51 @@ class pifu_parser
 		$xpath='/enterprise/group/grouptype[scheme="pifu-ims-go-org" and typevalue[@level=2]]/ancestor::group';
 		return $this->xml->xpath($xpath);
 	}
+	//To be removed, use group_members instead
 	function members($group)
 	{
+		if(is_object($group))
+			$group=$group->sourcedid->id;
 		if(empty($group))
 			throw new Exception('Empty argument');
+
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
+		return $this->xml->xpath($xpath);
+	}
+	//Get members of a group
+	function group_members($group,$options=array('status'=>1,'roletype'=>false))
+	{
+		if(is_object($group))
+			$group=(string)$group->sourcedid->id;
+		if(empty($group))
+			throw new Exception('Empty argument');
+		if(!is_string($group))
+			throw new Exception('Invalid argument');
+		if(isset($options['roletype']) && !is_string($options['roletype']))
+			throw new Exception('roletype must be string');
+
+		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
+		if(isset($options['roletype']))
+			$xpath=sprintf('%s/role[@roletype="%s"]',$xpath,$options['roletype']);
+		else
+			$xpath.='/role';
+
+		if(isset($options['status']) && $options['status']!==false)
+			$xpath.=sprintf('/status[.="%d"]',$roletype,$options['status']);
+
+		$xpath.='/ancestor::member';
+
+		return $this->xml->xpath($xpath);
+	}
+
+	function person_memberships($person,$status=false)
+	{
+		if(empty($person) || !is_string($person))
+			throw new Exception('Empty or invalid argument');
+		if($status===false)
+			$xpath=sprintf('/enterprise/membership/member/sourcedid/id[.="%s"]/parent::sourcedid/parent::member',$person);
+		else
+			$xpath=sprintf('/enterprise/membership/member/sourcedid/id[.="%s"]/parent::sourcedid/parent::member/role/status[.="%d"]/parent::role/parent::member',$person,$status);
 		return $this->xml->xpath($xpath);
 	}
 	function person($id)
@@ -46,6 +86,7 @@ class pifu_parser
 	function person_by_userid($id,$type)
 	{
 		$xpath=sprintf('/enterprise/person/userid[@useridtype="%s" and .="%s"]/ancestor::person',$type,$id);
+		$person=$this->xml->xpath($xpath);
 		if(empty($person))
 			return false;
 		else
