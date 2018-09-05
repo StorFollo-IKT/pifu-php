@@ -98,17 +98,34 @@ class pifu_parser_cache extends pifu_parser
 		}
 		return json_decode(file_get_contents($this->cachedir.'/schools.json'));
 	}
-	function members($group)
+	function group_members($group,$status=1)
 	{
-		$cachefile=sprintf('%s/group_members_%s.json',$this->cachedir,$group);
+		$cachefile=sprintf('%s/group_members_%s_%s.json',$this->cachedir,$group,$status);
 		if(!file_exists($cachefile))
 		{
 			$this->load_xml();
-			$members=parent::members($group);
+			$members=parent::group_members($group,array('status'=>1));
 			if(file_put_contents($cachefile,json_encode($members))===false)
 			{
 				trigger_error('Failed to create cache file');
 				return $members;
+			}
+		}
+		return json_decode(file_get_contents($cachefile));
+	}
+	function person_memberships($person,$status=false)
+	{
+		if($status===false)
+			$status='false';
+		$cachefile=sprintf('%s/person_memberships_%s_%s.json',$this->cachedir,$person,$status);
+		if(!file_exists($cachefile))
+		{
+			$this->load_xml();
+			$memberships=parent::person_memberships($person,$status);
+			if(file_put_contents($cachefile,json_encode($memberships))===false)
+			{
+				trigger_error('Failed to create cache file');
+				return $memberships;
 			}
 		}
 		return json_decode(file_get_contents($cachefile));
