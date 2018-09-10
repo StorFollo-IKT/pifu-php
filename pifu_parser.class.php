@@ -41,13 +41,16 @@ class pifu_parser
 	//Get members of a group
 	function group_members($group,$options=array('status'=>1,'roletype'=>false))
 	{
-		if(is_object($group))
+		if(is_object($group) && !empty($group->sourcedid->id))
 			$group=(string)$group->sourcedid->id;
+		else
+			$group=(string)$group;
+
 		if(empty($group))
 			throw new Exception('Empty argument');
 		if(!is_string($group))
 			throw new Exception('Invalid argument');
-		if(isset($options['roletype']) && !is_string($options['roletype']))
+		if(isset($options['roletype']) && $options['roletype']!==false && !is_string($options['roletype']))
 			throw new Exception('roletype must be string');
 
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
@@ -57,7 +60,7 @@ class pifu_parser
 			$xpath.='/role';
 
 		if(isset($options['status']) && $options['status']!==false)
-			$xpath.=sprintf('/status[.="%d"]',$roletype,$options['status']);
+			$xpath.=sprintf('/status[.="%d"]',$options['status']);
 
 		$xpath.='/ancestor::member';
 
