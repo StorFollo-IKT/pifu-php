@@ -9,5 +9,8 @@
             "email": "datagutten@datagutten.net"
         }
     ],
-    "require": {"ext-simplexml": "*"}
+    "require": {"ext-simplexml": "*"},
+    "autoload": {
+        "classmap": ["pifu_parser.class.php", "pifu_parser_cache.class.php"]
+    }
 }

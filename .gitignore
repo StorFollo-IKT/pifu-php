@@ -1,3 +1,5 @@
 pifuData.xml
 cache
 config.php
+vendor
+composer.lock
