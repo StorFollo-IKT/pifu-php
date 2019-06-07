@@ -65,7 +65,7 @@ class pifu_parser
 			throw new InvalidArgumentException('roletype must be string');
 
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
-		if(isset($options['roletype']))
+		if(!empty($options['roletype']))
 			$xpath=sprintf('%s/role[@roletype="%s"]',$xpath,$options['roletype']);
 		else
 			$xpath.='/role';
