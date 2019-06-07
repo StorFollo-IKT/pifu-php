@@ -2,7 +2,10 @@
 //https://github.com/iktsenteret/pifu/blob/master/pifu-ims/docs/spesifikasjon.md
 class pifu_parser
 {
-	public $xml=false;
+    /**
+     * @var SimpleXMLElement
+     */
+	public $xml=null;
 	function __construct($xml_file=false)
 	{
 		$this->load_xml($xml_file);
@@ -27,18 +30,26 @@ class pifu_parser
 		$xpath='/enterprise/group/grouptype[scheme="pifu-ims-go-org" and typevalue[@level=2]]/ancestor::group';
 		return $this->xml->xpath($xpath);
 	}
-	//To be removed, use group_members instead
+	/**
+     * @deprecated To be removed, use group_members instead
+     **/
 	function members($group)
 	{
 		if(is_object($group))
 			$group=$group->sourcedid->id;
 		if(empty($group))
-			throw new Exception('Empty argument');
+			throw new InvalidArgumentException('Empty argument');
 
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
 		return $this->xml->xpath($xpath);
 	}
-	//Get members of a group
+
+    /**
+     * Get members of a group
+     * @param string|SimpleXMLElement $group
+     * @param array $options
+     * @return mixed
+     */
 	function group_members($group,$options=array('status'=>1,'roletype'=>false))
 	{
 		if(is_object($group) && !empty($group->sourcedid->id))
@@ -47,11 +58,11 @@ class pifu_parser
 			$group=(string)$group;
 
 		if(empty($group))
-			throw new Exception('Empty argument');
+			throw new InvalidArgumentException('Empty argument');
 		if(!is_string($group))
-			throw new Exception('Invalid argument');
+			throw new InvalidArgumentException('Invalid argument');
 		if(isset($options['roletype']) && $options['roletype']!==false && !is_string($options['roletype']))
-			throw new Exception('roletype must be string');
+			throw new InvalidArgumentException('roletype must be string');
 
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
 		if(isset($options['roletype']))
@@ -70,7 +81,7 @@ class pifu_parser
 	function person_memberships($person,$status=false)
 	{
 		if(empty($person) || !is_string($person))
-			throw new Exception('Empty or invalid argument');
+			throw new InvalidArgumentException('Empty or invalid argument');
 		if($status===false)
 			$xpath=sprintf('/enterprise/membership/member/sourcedid/id[.="%s"]/parent::sourcedid/parent::member',$person);
 		else
