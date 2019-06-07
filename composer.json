@@ -1,0 +1,13 @@
+{
+    "name": "datagutten/pifu-php",
+    "description": "A PHP class to work with the PIFU (Flow of person-related information in education) format",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "datagutten",
+            "email": "datagutten@datagutten.net"
+        }
+    ],
+    "require": {"ext-simplexml": "*"}
+}
