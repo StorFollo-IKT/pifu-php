@@ -25,6 +25,28 @@ class pifu_parser
 		$xpath_klasser_skole=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/grouptype/typevalue[@level=%d]/ancestor::group',$school,$level);
 		return $this->xml->xpath($xpath_klasser_skole);
 	}
+
+    /**
+     * Get information about a group
+     * @param string|SimpleXMLElement $school School id
+     * @param string $group Group code
+     * @return SimpleXMLElement
+     */
+	function group_info($school, $group)
+    {
+        if(is_object($school) && is_a($school, 'SimpleXMLElement'))
+            $school = $school->sourcedid->id;
+
+        //var_dump($school);
+        $xpath=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/description/short[.="%s"]/ancestor::group', $school, $group);
+        var_dump($xpath);
+        $result = $this->xml->xpath($xpath);
+        if(!empty($result))
+            return $result[0];
+        else
+            return null;
+    }
+
 	function schools()
 	{
 		$xpath='/enterprise/group/grouptype[scheme="pifu-ims-go-org" and typevalue[@level=2]]/ancestor::group';
