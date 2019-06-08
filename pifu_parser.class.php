@@ -37,9 +37,7 @@ class pifu_parser
         if(is_object($school) && is_a($school, 'SimpleXMLElement'))
             $school = $school->sourcedid->id;
 
-        //var_dump($school);
         $xpath=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/description/short[.="%s"]/ancestor::group', $school, $group);
-        var_dump($xpath);
         $result = $this->xml->xpath($xpath);
         if(!empty($result))
             return $result[0];
