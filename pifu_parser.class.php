@@ -177,26 +177,33 @@ class pifu_parser
 		ksort($groups,SORT_NATURAL);
 		return $groups;
 	}
-	//Order group members by name
-	function ordered_members($group,$order_by_name='given')
-	{
-		foreach($this->members($group) as $member)
-		{
-			preg_match('/Schoolclass member (.+?), (.+)/',$member->comments,$name);
 
-			if($order_by_name==='given')
-				$key=2;
-			elseif($order_by_name==='family')
-				$key=1;
-			else
-				throw new Exception('Invalid sort');
-			if(!isset($name[$key]))
-				$members[]=$member;
-			else
-				$members[$name[$key]]=$member;
+    /**
+     * Get group members ordered by name
+     * @param SimpleXMLElement|string $group Group
+     * @param array $options Options
+     * @return SimpleXMLElement[] Ordered members
+     */
+	function ordered_members($group, $options=array('status'=>1,'roletype'=>'01', 'order_by_name'=>'given'))
+	{
+	    if(empty($options['order_by_name']))
+            $options['order_by_name']='given';
+
+		foreach($this->group_members($group, $options) as $member)
+		{
+		    $person = $this->person($member->sourcedid->id);
+			//preg_match('/Schoolclass member (.+?), (.+)/',$member->comments,$name);
+            if($options['order_by_name']==='given')
+                $name = (string)$person->name->n->given;
+            elseif($options['order_by_name']==='family')
+                $name = (string)$person->name->n->family;
+            else
+                throw new InvalidArgumentException('Invalid sort');
+
+            $members[$name]=$member;
 		}
 		if(empty($members))
-			return false;
+			return null;
 		ksort($members,SORT_NATURAL);
 		return $members;
 	}
