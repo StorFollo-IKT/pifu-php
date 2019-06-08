@@ -20,10 +20,17 @@ class pifu_parser
 		$xml_string=str_replace(' xmlns="http://pifu.no/xsd/pifu-ims_sas/pifu-ims_sas-1.1"','',$xml_string); //Remove namespace
 		$this->xml=simplexml_load_string($xml_string);
 	}
-	function groups($school,$level=1)
+
+    /**
+     * Get groups for a unit
+     * @param string $school School id
+     * @param int $level Group type
+     * @return SimpleXMLElement[] Groups
+     */
+	function groups($school, $level=1)
 	{
-		$xpath_klasser_skole=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/grouptype/typevalue[@level=%d]/ancestor::group',$school,$level);
-		return $this->xml->xpath($xpath_klasser_skole);
+		$xpath=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/grouptype/typevalue[@level=%d]/ancestor::group', $school, $level);
+		return $this->xml->xpath($xpath);
 	}
 
     /**
