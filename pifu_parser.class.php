@@ -6,13 +6,24 @@ class pifu_parser
      * @var SimpleXMLElement
      */
 	public $xml=null;
-	function __construct($xml_file=false)
+
+    /**
+     * pifu_parser constructor.
+     * @param string $xml_file PIFU XML file path
+     * @throws Exception
+     */
+	function __construct($xml_file=null)
 	{
 		$this->load_xml($xml_file);
 	}
-	function load_xml($xml_file=false)
+
+    /**
+     * @param string $xml_file
+     * @throws Exception File not found
+     */
+	function load_xml($xml_file=null)
 	{
-		if($xml_file===false)
+		if(empty($xml_file))
 			$xml_file=__DIR__.'/pifuData.xml';
 		if(!file_exists($xml_file))
 			throw new Exception('Could not find XML file '.$xml_file);
