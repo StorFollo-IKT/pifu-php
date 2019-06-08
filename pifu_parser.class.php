@@ -178,16 +178,23 @@ class pifu_parser
 		else
 		    return '';
 	}
-	function ordered_groups($school)
+
+    /**
+     * Get groups for a unit and order them using natural sort
+     * @param string $school Unit id
+     * @param int $level Group type
+     * @return array Ordered groups
+     */
+	function ordered_groups($school, $level=1)
 	{
-		foreach($this->groups($school) as $group)
+		foreach($this->groups($school, $level) as $group)
 		{
 			$id=(string)$group->sourcedid->id;
 			$sort_parameter=(string)$group->description->short;
 			$groups[$sort_parameter]=$group;
 		}
 		if(!isset($groups))
-			return false;
+			return null;
 		ksort($groups,SORT_NATURAL);
 		return $groups;
 	}
