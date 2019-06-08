@@ -83,9 +83,9 @@ class pifu_parser
      * Get members of a group
      * @param string|SimpleXMLElement $group
      * @param array $options
-     * @return mixed
+     * @return SimpleXMLElement[] Group members
      */
-	function group_members($group,$options=array('status'=>1,'roletype'=>false))
+	function group_members($group,$options=array('status'=>1,'roletype'=>null))
 	{
 		if(is_object($group) && !empty($group->sourcedid->id))
 			$group=(string)$group->sourcedid->id;
@@ -96,8 +96,8 @@ class pifu_parser
 			throw new InvalidArgumentException('Empty argument');
 		if(!is_string($group))
 			throw new InvalidArgumentException('Invalid argument');
-		if(isset($options['roletype']) && $options['roletype']!==false && !is_string($options['roletype']))
-			throw new InvalidArgumentException('roletype must be string');
+		if(!empty($options['roletype']) && !is_numeric($options['roletype']))
+			throw new InvalidArgumentException('roletype must be numeric');
 
 		$xpath=sprintf('/enterprise/membership/sourcedid/id[.="%s"]/ancestor::membership/member',$group);
 		if(!empty($options['roletype']))
