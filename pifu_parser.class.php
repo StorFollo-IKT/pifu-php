@@ -45,6 +45,21 @@ class pifu_parser
             return null;
     }
 
+    /**
+     * Get information about a group
+     * @param string $group_id Group id
+     * @return SimpleXMLElement Group info
+     */
+    function group_info_id($group_id)
+    {
+        $xpath=sprintf('/enterprise/group/sourcedid/id[.="%s"]/ancestor::group', $group_id);
+        $result = $this->xml->xpath($xpath);
+        if(!empty($result))
+            return $result[0];
+        else
+            return null;
+    }
+
 	function schools()
 	{
 		$xpath='/enterprise/group/grouptype[scheme="pifu-ims-go-org" and typevalue[@level=2]]/ancestor::group';
