@@ -141,12 +141,21 @@ class pifu_parser
 		else
 			return $person[0];
 	}
+
+    /**
+     * Get a persons phone number
+     * @param SimpleXMLElement $person Person object
+     * @param int $teltype Telephone type
+     * @return string Telephone number
+     */
 	function phone($person,$teltype)
 	{
 		$xpath=sprintf('.//tel[@teltype="%s"]',$teltype);
 		$result=$person->xpath($xpath);
 		if(!empty($result))
 			return (string)$result[0];
+		else
+		    return '';
 	}
 	function ordered_groups($school)
 	{
