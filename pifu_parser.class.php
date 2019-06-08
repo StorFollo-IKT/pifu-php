@@ -22,6 +22,19 @@ class pifu_parser
 	}
 
     /**
+     * Check if an argument is a SimpleXMLElement with the correct XML element name
+     * @param SimpleXMLElement $element
+     * @param string $tag XML tag
+     */
+    public static function validate($element, $tag=null)
+    {
+        if(!is_object($element) || !is_a($element, 'SimpleXMLElement'))
+            throw new InvalidArgumentException('Not a SimpleXMLElement');
+        if(!empty($tag) && $element->getName()!==$tag)
+            throw new InvalidArgumentException(sprintf('Tag name should be %s, not %s', $tag, $element->getName()));
+    }
+
+    /**
      * Get groups for a unit
      * @param string $school School id
      * @param int $level Group type
@@ -157,6 +170,7 @@ class pifu_parser
      */
 	function phone($person,$teltype)
 	{
+        self::validate($person, 'person');
 		$xpath=sprintf('.//tel[@teltype="%s"]',$teltype);
 		$result=$person->xpath($xpath);
 		if(!empty($result))
