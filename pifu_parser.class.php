@@ -144,31 +144,50 @@ class pifu_parser
 		return $this->xml->xpath($xpath);
 	}
 
-	function person_memberships($person,$status=false)
+    /**
+     * Get person memberships
+     * @param string $person Person id
+     * @param string $status Membership status
+     * @return SimpleXMLElement[] Array of memberships
+     */
+	function person_memberships($person,$status=null)
 	{
 		if(empty($person) || !is_string($person))
 			throw new InvalidArgumentException('Empty or invalid argument');
-		if($status===false)
+		if(empty($status))
 			$xpath=sprintf('/enterprise/membership/member/sourcedid/id[.="%s"]/parent::sourcedid/parent::member',$person);
 		else
 			$xpath=sprintf('/enterprise/membership/member/sourcedid/id[.="%s"]/parent::sourcedid/parent::member/role/status[.="%d"]/parent::role/parent::member',$person,$status);
 		return $this->xml->xpath($xpath);
 	}
-	function person($id)
+
+    /**
+     * Get information about a person
+     * @param string $person_id Person id
+     * @return SimpleXMLElement|null
+     */
+	function person($person_id)
 	{
-		$xpath=sprintf('/enterprise/person/sourcedid/id[.="%s"]/ancestor::person',$id);
+		$xpath=sprintf('/enterprise/person/sourcedid/id[.="%s"]/ancestor::person',$person_id);
 		$person=$this->xml->xpath($xpath);
 		if(empty($person))
-			return false;
+			return null;
 		else
 			return $person[0];
 	}
+
+    /**
+     * Find person by user id
+     * @param string $id User id
+     * @param string $type User id type
+     * @return SimpleXMLElement
+     */
 	function person_by_userid($id,$type)
 	{
 		$xpath=sprintf('/enterprise/person/userid[@useridtype="%s" and .="%s"]/ancestor::person',$type,$id);
 		$person=$this->xml->xpath($xpath);
 		if(empty($person))
-			return false;
+			return null;
 		else
 			return $person[0];
 	}
@@ -237,5 +256,4 @@ class pifu_parser
 		ksort($members,SORT_NATURAL);
 		return $members;
 	}
-	
 }
