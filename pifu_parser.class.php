@@ -200,7 +200,6 @@ class pifu_parser
 	{
 		foreach($this->groups($school, $level) as $group)
 		{
-			$id=(string)$group->sourcedid->id;
 			$sort_parameter=(string)$group->description->short;
 			$groups[$sort_parameter]=$group;
 		}
@@ -224,7 +223,6 @@ class pifu_parser
 		foreach($this->group_members($group, $options) as $member)
 		{
 		    $person = $this->person($member->sourcedid->id);
-			//preg_match('/Schoolclass member (.+?), (.+)/',$member->comments,$name);
             if($options['order_by_name']==='given')
                 $name = (string)$person->name->n->given;
             elseif($options['order_by_name']==='family')
