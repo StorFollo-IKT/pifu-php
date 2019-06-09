@@ -118,10 +118,11 @@ class pifu_parser
      */
 	function group_members($group,$options=array('status'=>1,'roletype'=>null))
 	{
-		if(is_object($group) && !empty($group->sourcedid->id))
-			$group=(string)$group->sourcedid->id;
-		else
-			$group=(string)$group;
+	    if(!is_string($group))
+        {
+            self::validate($group, 'group');
+            $group=(string)$group->sourcedid->id;
+        }
 
 		if(empty($group))
 			throw new InvalidArgumentException('Empty argument');
