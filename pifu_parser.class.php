@@ -10,7 +10,7 @@ class pifu_parser
     /**
      * pifu_parser constructor.
      * @param string $xml_file PIFU XML file path
-     * @throws Exception
+     * @throws Exception PIFU file not found
      */
 	function __construct($xml_file=null)
 	{
@@ -19,7 +19,7 @@ class pifu_parser
 
     /**
      * @param string $xml_file
-     * @throws Exception File not found
+     * @throws Exception PIFU file not found
      */
 	function load_xml($xml_file=null)
 	{
