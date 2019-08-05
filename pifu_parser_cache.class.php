@@ -8,7 +8,7 @@ class pifu_parser_cache extends pifu_parser
 	{
 		if(file_exists(__DIR__.'/config.php'))
 		{
-			require __DIR__.'/config.php';
+			$config = require __DIR__.'/config.php';
 			$this->cachedir=$config['pifu_cache_dir'];
 			$this->xml_file=$config['pifu_xml_file'];
 		}
