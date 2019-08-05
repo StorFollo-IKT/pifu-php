@@ -24,7 +24,11 @@ class pifu_parser
 	function load_xml($xml_file=null)
 	{
 		if(empty($xml_file))
-			$xml_file=__DIR__.'/pifuData.xml';
+        {
+            $config = require 'config.php';
+            $xml_file = $config['pifu_xml_file'];
+        }
+
 		if(!file_exists($xml_file))
 			throw new Exception('Could not find XML file '.$xml_file);
 		$xml_string=file_get_contents($xml_file);
