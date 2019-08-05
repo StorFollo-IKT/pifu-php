@@ -3,3 +3,7 @@ cache
 config.php
 vendor
 composer.lock
+coverage_html
+.phpunit.result.cache
+clover.xml
+.idea
