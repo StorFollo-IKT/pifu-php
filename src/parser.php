@@ -1,6 +1,11 @@
 <?php
 //https://github.com/iktsenteret/pifu/blob/master/pifu-ims/docs/spesifikasjon.md
-class pifu_parser
+namespace askommune\pifu_parser;
+use InvalidArgumentException;
+use SimpleXMLElement;
+use Exception;
+
+class parser
 {
     /**
      * @var SimpleXMLElement

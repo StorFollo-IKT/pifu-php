@@ -2,16 +2,17 @@
 
 
 use PHPUnit\Framework\TestCase;
+use askommune\pifu_parser\parser;
 
 class pifu_parserTest extends TestCase
 {
     /**
-     * @var pifu_parser
+     * @var parser
      */
     public $pifu;
     public function setUp(): void
     {
-        $this->pifu = new pifu_parser(__DIR__.'/sample_data/PIFU-IMS_SAS_eksempel.xml');
+        $this->pifu = new parser(__DIR__.'/sample_data/PIFU-IMS_SAS_eksempel.xml');
     }
 
     public function testGroup_members()

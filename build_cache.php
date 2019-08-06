@@ -1,9 +1,15 @@
 <?Php
 $starttime=microtime(true);
-require 'pifu_parser_cache.class.php';
-//printf("%3f sekund(er) linje %d\n",microtime(true)-$starttime,__LINE__);
-$pifu=new pifu_parser_cache;
-$pifu->load_xml();
+require 'vendor/autoload.php';
+$pifu=new \askommune\pifu_parser\parser_cache();
+
+try {
+    $pifu->load_xml();
+}
+catch (Exception $e)
+{
+    die($e->getMessage());
+}
 
 foreach($pifu->schools() as $school)
 {

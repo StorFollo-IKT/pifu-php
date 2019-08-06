@@ -1,6 +1,8 @@
 <?Php
-require_once 'pifu_parser.class.php';
-class pifu_parser_cache extends pifu_parser
+namespace askommune\pifu_parser;
+use Exception;
+
+class parser_cache extends parser
 {
 	public $cachedir;
 	public $xml_file;
@@ -15,7 +17,7 @@ class pifu_parser_cache extends pifu_parser
 		else
 		{
 			$this->cachedir=__DIR__.'/cache';
-			$this->xml_file=__DIR__.'/pifuData.xml';
+			$this->xml_file= __DIR__ . '/pifuData.xml';
 		}
 
 		if(!file_exists($this->cachedir))

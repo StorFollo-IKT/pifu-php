@@ -9,9 +9,13 @@
             "email": "datagutten@datagutten.net"
         }
     ],
-    "require": {"ext-simplexml": "*"},
+    "require": {"ext-simplexml": "*",
+      "ext-json": "*"
+    },
     "autoload": {
-        "classmap": ["pifu_parser.class.php", "pifu_parser_cache.class.php"]
+        "psr-4": {
+            "askommune\\pifu_parser\\": "src"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "^8.3"
