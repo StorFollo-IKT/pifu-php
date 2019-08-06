@@ -6,7 +6,7 @@ class parser_cache extends parser
 {
 	public $cachedir;
 	public $xml_file;
-	function __construct($xml_file=false,$cachedir=false)
+	function __construct()
 	{
 		if(file_exists(__DIR__.'/config.php'))
 		{
