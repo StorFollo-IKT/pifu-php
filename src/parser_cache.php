@@ -40,11 +40,16 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($this->cachedir.'/'.$cachefile));
 	}
-	function load_xml($xml_file=false)
+
+    /**
+     * @param string $xml_file PIFU XML file
+     * @throws Exception File not found
+     */
+	function load_xml($xml_file=null)
 	{
 		if($this->xml!==false)
 			return;
-		if($xml_file!==false)
+		if(!empty($xml_file))
 			$this->xml_file=$xml_file;
 
 		$processed_file=$this->cachedir.'/pifuData_processed.xml';
