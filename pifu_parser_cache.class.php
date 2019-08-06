@@ -148,9 +148,9 @@ class pifu_parser_cache extends pifu_parser
 		return json_decode(file_get_contents($cachefile));
 	}
 	
-	function ordered_groups($school)
+	function ordered_groups($school, $level = 1)
 	{
-		$cachefile=sprintf('%s/ordered_groups_%s.json',$this->cachedir,$school);
+		$cachefile=sprintf('%s/ordered_groups_%s_%d.json',$this->cachedir, $level ,$school);
 		if(!file_exists($cachefile))
 		{
 			$this->load_xml();
@@ -163,5 +163,4 @@ class pifu_parser_cache extends pifu_parser
 		}
 		return json_decode(file_get_contents($cachefile));
 	}
-	
 }
