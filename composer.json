@@ -14,10 +14,13 @@
     },
     "autoload": {
         "psr-4": {
-            "askommune\\pifu_parser\\": "src"
+            "askommune\\pifu_parser\\": "src",
+            "askommune\\pifu_parser\\tests\\": "tests",
+            "askommune\\pifu_parser\\exceptions\\": "exceptions"
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.3"
+        "phpunit/phpunit": "^8.3",
+        "symfony/filesystem": "^4.3"
     }
 }

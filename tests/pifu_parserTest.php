@@ -1,8 +1,9 @@
 <?php
 
-
-use PHPUnit\Framework\TestCase;
+namespace askommune\pifu_parser\tests;
 use askommune\pifu_parser\parser;
+use Exception;
+use PHPUnit\Framework\TestCase;
 
 class pifu_parserTest extends TestCase
 {
