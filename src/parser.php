@@ -1,9 +1,9 @@
 <?php
 //https://github.com/iktsenteret/pifu/blob/master/pifu-ims/docs/spesifikasjon.md
 namespace askommune\pifu_parser;
+use Exception;
 use InvalidArgumentException;
 use SimpleXMLElement;
-use Exception;
 
 class parser
 {
@@ -75,7 +75,7 @@ class parser
 	function group_info($school, $group)
     {
         if(is_object($school) && is_a($school, 'SimpleXMLElement'))
-            $school = $school->sourcedid->id;
+            $school = $school->{'sourcedid'}->{'id'};
 
         $xpath=sprintf('/enterprise/group/relationship/sourcedid/id[.="%s"]/ancestor::group/description/short[.="%s"]/ancestor::group', $school, $group);
         $result = $this->xml->xpath($xpath);
@@ -130,7 +130,7 @@ class parser
 	    if(!is_string($group))
         {
             self::validate($group, 'group');
-            $group=(string)$group->sourcedid->id;
+            $group=(string)$group->{'sourcedid'}->{'id'};
         }
 
 		if(empty($group))
@@ -229,7 +229,7 @@ class parser
 	{
 		foreach($this->groups($school, $level) as $group)
 		{
-			$sort_parameter=(string)$group->description->short;
+			$sort_parameter=(string)$group->{'description'}->{'short'};
 			$groups[$sort_parameter]=$group;
 		}
 		if(!isset($groups))
@@ -251,11 +251,11 @@ class parser
 
 		foreach($this->group_members($group, $options) as $member)
 		{
-		    $person = $this->person($member->sourcedid->id);
+		    $person = $this->person($member->{'sourcedid'}->{'id'});
             if($options['order_by_name']==='given')
-                $name = (string)$person->name->n->given;
+                $name = (string)$person->{'name'}->{'n'}->{'given'};
             elseif($options['order_by_name']==='family')
-                $name = (string)$person->name->n->family;
+                $name = (string)$person->{'name'}->{'n'}->{'family'};
             else
                 throw new InvalidArgumentException('Invalid sort');
 
