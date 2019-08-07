@@ -111,7 +111,12 @@ class parser_cache extends parser
      */
 	function group_members($group,$status=1)
 	{
-		$cachefile=sprintf('%s/group_members_%s_%s.json',$this->cachedir,$group,$status);
+	    if(is_object($group))
+	        $group_id = $group->{'sourcedid'}->{'id'};
+	    else
+	        $group_id = $group;
+
+		$cachefile=sprintf('%s/group_members_%s_%s.json',$this->cachedir,$group_id,$status);
 		if(!file_exists($cachefile))
 		{
 			$this->load_xml();
@@ -131,8 +136,6 @@ class parser_cache extends parser
      */
 	function person_memberships($person,$status=null)
 	{
-		if($status===false)
-			$status='false';
 		$cachefile=sprintf('%s/person_memberships_%s_%s.json',$this->cachedir,$person,$status);
 		if(!file_exists($cachefile))
 		{
