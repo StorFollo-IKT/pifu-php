@@ -120,7 +120,7 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($cachefile));
 	}
-	function person_memberships($person,$status=false)
+	function person_memberships($person,$status=null)
 	{
 		if($status===false)
 			$status='false';
@@ -135,7 +135,7 @@ class parser_cache extends parser
 				return $memberships;
 			}
 		}
-		return json_decode(file_get_contents($cachefile));
+		return (array)json_decode(file_get_contents($cachefile));
 	}
 	function person($id)
 	{
@@ -168,6 +168,6 @@ class parser_cache extends parser
 				return $ordered_groups;
 			}
 		}
-		return json_decode(file_get_contents($cachefile));
+		return (array)json_decode(file_get_contents($cachefile));
 	}
 }
