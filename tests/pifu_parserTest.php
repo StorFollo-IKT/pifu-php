@@ -10,6 +10,10 @@ class pifu_parserTest extends TestCase
      * @var parser
      */
     public $pifu;
+
+    /**
+     * @throws Exception
+     */
     public function setUp(): void
     {
         $this->pifu = new parser(__DIR__.'/sample_data/PIFU-IMS_SAS_eksempel.xml');
