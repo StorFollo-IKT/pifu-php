@@ -27,6 +27,7 @@ class pifu_parserTest extends TestCase
     public function testPerson_memberships()
     {
         $memberships = $this->pifu->person_memberships('global_ID_01235');
+        $this->assertIsArray($memberships);
         $this->assertEquals('Janne Stor sitt medlemskap i Måneflekken skole', $memberships[1]->{'comments'});
     }
 
