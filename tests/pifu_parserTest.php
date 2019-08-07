@@ -46,15 +46,19 @@ class pifu_parserTest extends TestCase
         $this->assertEquals('global_ID_org_17', $school->sourcedid->id);
     }
 
-    /*public function testGroup_info()
+    public function testGroup_info()
     {
-
+        $group = $this->pifu->group_info('global_ID_org_17','Basisgruppe 7A ved Måneflekken skole');
+        $this->assertEquals('Informasjon om basisgruppa 7A ved Måneflekken skole', $group->{'comments'});
     }
 
     public function testOrdered_groups()
     {
-
-    }*/
+        $groups = $this->pifu->ordered_groups('global_ID_org_17');
+        $this->assertIsArray($groups);
+        $keys = array_keys($groups);
+        $this->assertEquals('Basisgruppe 7A ved Måneflekken skole', $keys[0]);
+    }
 
     public function testPerson_by_userid()
     {
