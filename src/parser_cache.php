@@ -90,6 +90,11 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($cachefile));
 	}
+
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
 	function schools()
 	{
 		if(!file_exists($this->cachedir.'/schools.json'))
@@ -105,6 +110,11 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($this->cachedir.'/schools.json'));
 	}
+
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
 	function group_members($group,$status=1)
 	{
 		$cachefile=sprintf('%s/group_members_%s_%s.json',$this->cachedir,$group,$status);
@@ -120,6 +130,11 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($cachefile));
 	}
+
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
 	function person_memberships($person,$status=null)
 	{
 		if($status===false)
@@ -137,6 +152,11 @@ class parser_cache extends parser
 		}
 		return (array)json_decode(file_get_contents($cachefile));
 	}
+
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
 	function person($id)
 	{
 		/*$this->load_xml();
@@ -154,7 +174,11 @@ class parser_cache extends parser
 		}
 		return json_decode(file_get_contents($cachefile));
 	}
-	
+
+    /**
+     * @inheritdoc
+     * @throws Exception
+     */
 	function ordered_groups($school, $level = 1)
 	{
 		$cachefile=sprintf('%s/ordered_groups_%s_%d.json',$this->cachedir, $level ,$school);
