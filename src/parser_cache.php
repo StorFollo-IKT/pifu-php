@@ -5,20 +5,14 @@ use Exception;
 class parser_cache extends parser
 {
 	public $cachedir;
-	public $xml_file;
-	function __construct()
+
+	function __construct($xml_file = null)
 	{
-		if(file_exists(__DIR__.'/config.php'))
-		{
-			$config = require __DIR__.'/config.php';
-			$this->cachedir=$config['pifu_cache_dir'];
-			$this->xml_file=$config['pifu_xml_file'];
-		}
-		else
-		{
-			$this->cachedir=__DIR__.'/cache';
-			$this->xml_file= __DIR__ . '/pifuData.xml';
-		}
+	    parent::__construct($xml_file, false);
+	    if(!empty($this->config['pifu_cache_dir']))
+            $this->cachedir=$this->config['pifu_cache_dir'];
+	    else
+            $this->cachedir=__DIR__.'/cache';
 
 		if(!file_exists($this->cachedir))
 		{

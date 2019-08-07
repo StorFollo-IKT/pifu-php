@@ -11,32 +11,37 @@ class parser
      * @var SimpleXMLElement
      */
 	public $xml=null;
+	public $config;
+    public $xml_file;
 
     /**
      * pifu_parser constructor.
      * @param string $xml_file PIFU XML file path
+     * @param bool $load_xml Load XML
      * @throws Exception PIFU file not found
      */
-	function __construct($xml_file=null)
+	function __construct($xml_file=null, $load_xml = true)
 	{
-		$this->load_xml($xml_file);
+        if(empty($xml_file))
+        {
+            $this->config = require 'config.php';
+            $this->xml_file = $this->config['pifu_xml_file'];
+        }
+        else
+            $this->xml_file = $xml_file;
+        if(!file_exists($this->xml_file))
+            throw new Exception('Could not find XML file: '.$this->xml_file);
+
+        if($load_xml)
+		    $this->load_xml();
 	}
 
     /**
-     * @param string $xml_file
      * @throws Exception PIFU file not found
      */
-	function load_xml($xml_file=null)
+	function load_xml()
 	{
-		if(empty($xml_file))
-        {
-            $config = require 'config.php';
-            $xml_file = $config['pifu_xml_file'];
-        }
-
-		if(!file_exists($xml_file))
-			throw new Exception('Could not find XML file '.$xml_file);
-		$xml_string=file_get_contents($xml_file);
+		$xml_string=file_get_contents($this->xml_file);
 		$xml_string=str_replace(' xmlns="http://pifu.no/xsd/pifu-ims_sas/pifu-ims_sas-1.1"','',$xml_string); //Remove namespace
 		$this->xml=simplexml_load_string($xml_string);
 	}
