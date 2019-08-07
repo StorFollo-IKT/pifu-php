@@ -17,10 +17,8 @@ class pifu_parserTest extends TestCase
 
     public function testGroup_members()
     {
-        $schools = $this->pifu->schools();
-        $school = $schools[0];
-
-        $members = $this->pifu->group_members($school);
+        $members = $this->pifu->group_members('global_ID_org_17');
+        $this->assertIsArray($members);
         $this->assertEquals('Janne Stor sitt medlemskap i Måneflekken skole', $members[0]->{'comments'});
         $this->assertEquals('Ola Nordmann sitt medlemskap i Måneflekken skole', $members[1]->{'comments'});
     }
