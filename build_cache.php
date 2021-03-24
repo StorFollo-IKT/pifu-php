@@ -1,9 +1,12 @@
 <?Php
+
+use storfollo\pifu_parser\parser_cache;
+
 $starttime=microtime(true);
 require 'vendor/autoload.php';
-$pifu=new \askommune\pifu_parser\parser_cache();
 
 try {
+    $pifu=new parser_cache();
     $pifu->load_xml();
 }
 catch (Exception $e)

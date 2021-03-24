@@ -1,6 +1,8 @@
 <?Php
-namespace askommune\pifu_parser;
+namespace storfollo\pifu_parser;
 use Exception;
+use stdClass;
+use storfollo\pifu_parser\exceptions\CacheMissing;
 
 class parser_cache extends parser
 {

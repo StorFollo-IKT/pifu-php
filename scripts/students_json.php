@@ -1,6 +1,6 @@
 <?php
 
-use askommune\pifu_parser\parser;
+use storfollo\pifu_parser\parser;
 
 require 'vendor/autoload.php';
 $pifu=new parser($argv[1]);

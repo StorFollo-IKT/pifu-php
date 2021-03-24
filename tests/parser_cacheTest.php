@@ -6,8 +6,9 @@
  * Time: 11:45
  */
 
-namespace askommune\pifu_parser\tests;
-use askommune\pifu_parser\parser_cache;
+namespace storfollo\pifu_parser\tests;
+use Exception;
+use storfollo\pifu_parser\parser_cache;
 use Symfony\Component\Filesystem\Filesystem;
 
 class parser_cacheTest extends pifu_parserTest

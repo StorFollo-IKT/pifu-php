@@ -1,5 +1,5 @@
 {
-    "name": "datagutten/pifu-php",
+    "name": "storfollo/pifu-php",
     "description": "A PHP class to work with the PIFU (Flow of person-related information in education) format",
     "type": "library",
     "license": "GPL-3.0-or-later",
@@ -14,9 +14,9 @@
     },
     "autoload": {
         "psr-4": {
-            "askommune\\pifu_parser\\": "src",
-            "askommune\\pifu_parser\\tests\\": "tests",
-            "askommune\\pifu_parser\\exceptions\\": "exceptions"
+            "storfollo\\pifu_parser\\": "src",
+            "storfollo\\pifu_parser\\tests\\": "tests",
+            "storfollo\\pifu_parser\\exceptions\\": "exceptions"
         }
     },
     "require-dev": {

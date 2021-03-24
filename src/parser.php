@@ -1,6 +1,6 @@
 <?php
 //https://github.com/iktsenteret/pifu/blob/master/pifu-ims/docs/spesifikasjon.md
-namespace askommune\pifu_parser;
+namespace storfollo\pifu_parser;
 use Exception;
 use InvalidArgumentException;
 use SimpleXMLElement;
