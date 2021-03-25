@@ -5,8 +5,8 @@
     "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "datagutten",
-            "email": "datagutten@datagutten.net"
+            "name": "Anders Birkenes",
+            "email": "anders.birkenes@storfolloikt.no"
         }
     ],
     "require": {"ext-simplexml": "*",
